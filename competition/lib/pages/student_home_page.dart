@@ -17,31 +17,45 @@ class StudentHomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue[600],
         title: const Text('个人主页',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700,fontSize: 18)),
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         elevation: 0,
-        leading: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back,color: Colors.white), ),
-        systemOverlayStyle: SystemUiOverlayStyle.dark, 
+        leading: IconButton(
+  icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+  onPressed: () {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+    );
+  },
+),
+systemOverlayStyle: SystemUiOverlayStyle.dark, 
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         children: [
+          const SizedBox(height: 20),
           // 顶部个人信息卡
           Container(
+            height: 200,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius:10,
                   offset: Offset(0, 2),
                 ),
               ],
             ),
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            child: Row(
+            child: Column(
+             
+              mainAxisAlignment: MainAxisAlignment.center,//垂直居中
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const CircleAvatar(
                   radius: 30,
@@ -49,18 +63,19 @@ class StudentHomePage extends StatelessWidget {
                   child: Icon(Icons.person, size: 40, color: Colors.grey),
                 ),
                 const SizedBox(width: 16),
+                SizedBox(height: 12),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     Text(
                       '小明同学',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 2),
                     Text(
                       '账号：20240001',
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                      style: TextStyle(fontSize: 14, color: Colors.black54, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -125,10 +140,10 @@ class StudentHomePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5,
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 10,
             offset: Offset(0, 2),
           ),
         ],

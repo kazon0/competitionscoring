@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'appeal_detail_dialog.dart';
 
 class StudentAppealPage extends StatefulWidget {
   const StudentAppealPage({super.key});
@@ -33,7 +34,7 @@ class _StudentAppealPageState extends State<StudentAppealPage> {
       'content': '赛事信息错误，团队成员信息有误',
       'student': '小红',
       'status': '审核通过',
-      'color': Colors.green
+      'color': Color.fromARGB(255, 138, 200, 113)
     },
     {
       'title': '电子设计竞赛校选拔赛',
@@ -42,7 +43,7 @@ class _StudentAppealPageState extends State<StudentAppealPage> {
       'content': '对优胜奖积分有疑问，希望重新评估',
       'student': '小刚',
       'status': '审核驳回',
-      'color': Colors.red
+      'color': Color.fromARGB(255, 232, 93, 80)
     },
   ];
 
@@ -134,23 +135,33 @@ class _StudentAppealPageState extends State<StudentAppealPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                              Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: item['color'].withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(color: item['color']),
-                              ),
-                              child: Text(
-                                item['status'],
-                                style: TextStyle(
-                                  color: item['color'],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+Align(
+  alignment: Alignment.centerRight,
+  child: GestureDetector(
+    onTap: () {
+      if (item['status'] == '待审核') {
+        _showDetailDialog(item, index);
+      }
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+      decoration: BoxDecoration(
+        color: item['color'],
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: item['color']),
+      ),
+      child: Text(
+        item['status'],
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  ),
+),
+
                           ],
                         ),
                       ],
@@ -192,4 +203,28 @@ class _StudentAppealPageState extends State<StudentAppealPage> {
       ),
     );
   }
+
+  void _showDetailDialog(Map<String, dynamic> item, int index) {
+  showDialog(
+    context: context,
+    builder: (context) => AppealDetailDialog(
+      item: item,
+      onApprove: () {
+        setState(() {
+          appeals[index]['status'] = '审核通过';
+          appeals[index]['color'] = const Color.fromARGB(255, 138, 200, 113);
+        });
+        Navigator.pop(context);
+      },
+      onReject: () {
+        setState(() {
+          appeals[index]['status'] = '审核驳回';
+          appeals[index]['color'] = const Color.fromARGB(255, 232, 93, 80);
+        });
+        Navigator.pop(context);
+      },
+    ),
+  );
+}
+
 }

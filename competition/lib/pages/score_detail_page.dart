@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'appeal_dialog.dart'; 
 
 class ScoreDetailPage extends StatefulWidget {
   const ScoreDetailPage({super.key});
@@ -236,19 +237,29 @@ class _ScoreDetailPageState extends State<ScoreDetailPage> {
                         fontSize: 10,
                         fontWeight: FontWeight.w600)),
                 const SizedBox(height: 3),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.orange[600],
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: const Text('申诉',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600)),
-                ),
+                GestureDetector(
+  onTap: () {
+    showDialog(
+      context: context,
+      builder: (context) => const AppealDialog(), // 你的弹窗组件
+    );
+  },
+  child: Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+    decoration: BoxDecoration(
+      color: Colors.orange[600],
+      borderRadius: BorderRadius.circular(6),
+    ),
+    child: const Text(
+      '申诉',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 11,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  ),
+)
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'student_score_detail_page.dart'; 
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});
@@ -10,6 +11,7 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   int currentPage = 1;
   final int itemsPerPage = 5;
+  final TextEditingController _searchController = TextEditingController();
 
   final List<Map<String, dynamic>> allData = List.generate(15, (index) {
     return {
@@ -64,15 +66,21 @@ class _RankingPageState extends State<RankingPage> {
                   ),
                 ],
               ),
-              child: const TextField(
+              child: TextField(
+                controller: _searchController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: _handleSearch, // 点击图标也可触发搜索
+                  ),
                   hintText: '搜索学生姓名',
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 ),
+                onSubmitted: (_) => _handleSearch(), // 按回车搜索
               ),
             ),
+
             const SizedBox(height: 25),
 
             // 筛选行
@@ -177,6 +185,19 @@ class _RankingPageState extends State<RankingPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+    //  搜索逻辑：跳转详情页
+  void _handleSearch() {
+    final input = _searchController.text.trim();
+    if (input.isEmpty) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => StudentScoreDetailPage(studentName: input),
       ),
     );
   }
